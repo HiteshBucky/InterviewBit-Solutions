@@ -6,59 +6,26 @@ package String;
  * Time - 2:14 PM
  */
 public class CompareVersions {
-
+    public int compareString(String a, String b){
+		return new BigInteger(a).compareTo(new BigInteger(b));
+	}
+    
     public int compareVersion(String A, String B) {
+        String a[] = str1.split("[.]");     //Split the number 1.12.3 -> [1,12,3]
+        String b[] = str2.split("[.]");
 
-        int i=0;
-        int j=0;
-
-        int l1=A.length(),l2=B.length();
-        while(i < l1 && j < l2){
-            while(i<l1 && A.charAt(i) =='0'){
-                i++;
-            }
-
-            StringBuilder s1 = new StringBuilder();
-            while(i<l1 && A.charAt(i)!='.'){
-                s1.append(A.charAt(i));
-                i++;
-            }
-
-            while(j<l2 && B.charAt(j)=='0'){
-                j++;
-            }
-
-            StringBuilder s2 = new StringBuilder();
-            while(j<l2 && B.charAt(j)!='.'){
-                s2.append(B.charAt(j));
-                j++;
-            }
-
-            String t1 = s1.toString();
-            String t2 = s2.toString();
-
-            if(!t1.equals(t2)){
-                if(t1.length() == t2.length()){
-                    return t1.compareTo(t2) > 0 ? 1:-1;
-                }
-                return t1.length() > t2.length() ? 1:-1;
-            }
-            i++;
-            j++;
-        }
-
-        while(i<l1 && A.charAt(i) =='0'){
-            i++;
-        }
-
-        while(j<l2 && B.charAt(j)=='0'){
-            j++;
-        }
-
-        if(i>=l1 && j>=l2){
-            return 0;
-        }
-        return i>j ? 1:-1;
+        int i = 0;                          //Start Comparing from left af the array one by one if both element is diff, then return accordingly
+        for(; (i<a.length && i<b.length); i++){     
+            if(compareString(a[i], b[i])>0) return 1;
+            if(compareString(a[i], b[i])<0) return -1;					
+        }                                   
+        for(int j = i; j<a.length; j++)         // case :  A[1,23,23], B[1,23,23,4] just check last number that were not checked earlier
+            if(Integer.valueOf(a[i]) != 0) return 1;
+        
+        for(int j = i; j<b.length; j++)         //case : A[1,23], B[1]
+            if(Integer.valueOf(b[i]) != 0) return -1;
+        
+        return 0;    
     }
 
     public static void main(String[] args) {
